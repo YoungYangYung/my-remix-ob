@@ -18,15 +18,17 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function JokesIndexRoute() {
-    const data = useLoaderData<LoaderData>();
-    console.log('===',data)
+  const data = useLoaderData<LoaderData>();
+  console.log("===", data);
   return (
     <div>
       <p>Here's a random joke:</p>
       <p>{data.randomJoke.content}</p>
-      <Link to={data.randomJoke.id}>
-        "{data.randomJoke.name}" Permalink
-      </Link>
+      <Link to={data.randomJoke.id}>"{data.randomJoke.name}" Permalink</Link>
     </div>
   );
+}
+
+export function ErrorBoundary() {
+  return <div className="error-container">I did a whoopsies.</div>;
 }

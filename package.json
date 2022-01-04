@@ -13,6 +13,7 @@
     "@prisma/client": "^3.7.0",
     "@remix-run/react": "^1.1.1",
     "@remix-run/serve": "^1.1.1",
+    "bcryptjs": "^2.4.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "remix": "^1.1.1"
@@ -28,8 +29,8 @@
   "engines": {
     "node": ">=14"
   },
-  "prisma":{
-    "seed":"node --require esbuild-register prisma/seed.ts"
+  "prisma": {
+    "seed": "node --require esbuild-register prisma/seed.ts"
   },
   "sideEffects": false
 }

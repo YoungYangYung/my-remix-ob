@@ -12,8 +12,19 @@ datasource db {
 
 model Joke {
   id String @id @default(uuid())
+  jokesterId String
+  jokester User @relation(fields: [jokesterId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   name String
   content String
+}
+
+model User {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  username String @unique
+  passwordHash String
+  jokes Joke[]
 }
