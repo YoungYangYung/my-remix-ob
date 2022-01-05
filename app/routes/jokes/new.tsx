@@ -1,8 +1,9 @@
 import type { ActionFunction, LoaderFunction } from "remix";
-import { useActionData, json, useCatch, Link } from "remix";
+import { useActionData, json, useCatch, Link, useTransition, Form } from "remix";
 import { redirect } from "remix";
 import { db } from "~/utils/db.server";
 import { requireUserId, getUserId } from "~/utils/session.server";
+import { JokeDisplay } from "~/components/joke";
 
 function validateJokeContent(content: string) {
   if (content.length < 10) return "长度不得小于10";
@@ -64,10 +65,31 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function NewJokeRoute() {
   const actionData = useActionData<ActionData>();
+
+  const transition = useTransition();
+  if (transition.submission) {
+    const name = transition.submission.formData.get("name");
+    const content = transition.submission.formData.get("content");
+    if (
+      typeof name === "string" &&
+      typeof content === "string" &&
+      !validateJokeContent(content) &&
+      !validateJokeName(name)
+    ) {
+      return (
+        <JokeDisplay
+          joke={{ name, content }}
+          isOwner={true}
+          canDelete={false}
+        />
+      );
+    }
+  }
+
   return (
     <div>
       <p>add</p>
-      <form method="post">
+      <Form method="post">
         <div>
           <label>
             Name:{" "}
@@ -112,9 +134,11 @@ export default function NewJokeRoute() {
           ) : null}
         </div>
         <div>
-          <button type="submit">添加</button>
+          <button type="submit" className="button">
+            添加
+          </button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }

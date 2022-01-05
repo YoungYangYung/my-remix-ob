@@ -1,12 +1,15 @@
-import { Links, LiveReload, Outlet, LinksFunction, useCatch } from "remix";
+import {
+  Links,
+  LiveReload,
+  Outlet,
+  LinksFunction,
+  useCatch,
+  Scripts,
+} from "remix";
 import type { MetaFunction } from "remix";
 import globalStylesUrl from "./styles/global.css";
 import globalMediumStylesUrl from "./styles/global-medium.css";
 import globalLargeStylesUrl from "./styles/global-large.css";
-
-export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
-};
 
 export const links: LinksFunction = () => {
   return [
@@ -43,6 +46,7 @@ function Document({
       </head>
       <body>
         {children}
+        <Scripts/>
         {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
       </body>
     </html>
@@ -81,3 +85,17 @@ export function CatchBoundary() {
     </Document>
   );
 }
+
+export const meta: MetaFunction = () => {
+  const description = `Learn Remix and laugh at the same time!`;
+  return {
+    description,
+    keywords: "Remix,jokes",
+    "twitter:image": "https://remix-jokes.lol/social.png",
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@remix_run",
+    "twitter:site": "@remix_run",
+    "twitter:title": "Remix Jokes",
+    "twitter:description": description,
+  };
+};
